@@ -45,13 +45,13 @@ struct ContentView: View {
                     }
                 }
                 //.navigationTitle("Atrápalo")
-                .onAppear { productVM.fetchEvents() }
+                .onAppear { productVM.fetchProducts() }
                 Spacer()
                 HStack{
                     Spacer()
                     
                     Button(action:{
-                        productVM.fetchEvents()
+                        productVM.fetchProducts()
                     }){
                         VStack{
                             Image(systemName: "house.fill")
