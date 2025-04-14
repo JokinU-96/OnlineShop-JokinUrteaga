@@ -7,6 +7,6 @@
 import SwiftUI
 
 struct Rating : Codable {
-    var product_rate : Double
-    var product_count : Int
+    var rate : Double
+    var count : Int
 }

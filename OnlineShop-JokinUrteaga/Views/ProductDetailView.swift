@@ -11,28 +11,29 @@ struct ProductDetailView: View {
     
     var product: Product
     @StateObject var authVM: AuthViewModel = AuthViewModel()
-    @StateObject var productVM: ProductViewModel = ProductViewModel()
+    @StateObject var cartVM: CartViewModel = CartViewModel()
     
     var body: some View {
         ScrollView {
             VStack(alignment: .center, spacing: 20) {
                 Spacer()
-                Image(systemName: "photo")  // Imagen de evento por defecto
-                    .resizable()
-                    .scaledToFit()
+                AsyncImage(url: URL(string: product.image)){
+                    image in image.resizable().scaledToFit()
+                } placeholder: {
+                    ProgressView()
+                }
                     .frame(height: 200)
                     .foregroundStyle(.red)
-                    .opacity(0.5)
                     .cornerRadius(12)
                 VStack(alignment: .leading, spacing: 10) {
-                    Text(product.product_title)
+                    Text(product.title)
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.red)
-                    Text("Descripción: \(product.product_description)")
+                    Text("Descripción: \(product.description)")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
-                    Text("Precio: \(product.product_price)")
+                    Text("Precio: \(product.price)")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
@@ -41,16 +42,14 @@ struct ProductDetailView: View {
                 .cornerRadius(12)
                 .shadow(radius: 3)
                 
-                if let user = authVM.user {
                     Button("Añadir al carrito") {
-                        productVM.addProductToMyCart(productId: product.id, userId: user.id)
+                        cartVM.addProductToMyCart(product: product)
                         print("Producto añadido")
                     }
                     .padding()
                     .background(Color("PrimaryColor"))
                     .foregroundColor(.white)
                     .cornerRadius(10)
-                }
                 Spacer()
             }
             .padding()
@@ -60,8 +59,8 @@ struct ProductDetailView: View {
 }
 #Preview {
     ProductDetailView(
-        product: Product(id: 0, product_title: "Producto de ejemplo", product_price: 23.5, product_description: "Descripción del producto de ejemplo.", product_category: "Categoría de ejemplo", product_image: "sin imagen", product_rating: Rating(product_rate: 3.9, product_count: 120)),
+        product: Product(id: 0, title: "Producto de ejemplo", price: 23.5, description: "Descripción del producto de ejemplo.", category: "Categoría de ejemplo", image: "https://i0.wp.com/www.redefineyouredge.com/wp-content/uploads/2021/05/32.-What-I_ve-learned-about-indifference.png?w=1280&ssl=1", rating: Rating(rate: 3.9, count: 120)),
         authVM: AuthViewModel(),
-        productVM: ProductViewModel()
+        cartVM: CartViewModel()
     )
 }

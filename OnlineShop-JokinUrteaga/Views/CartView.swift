@@ -10,22 +10,33 @@ import SwiftUI
 struct CartView: View{
     
     @ObservedObject var cartVM : CartViewModel
-    @ObservedObject var authVM: AuthViewModel
     
     var body: some View {
         VStack{
-            if let user = authVM.user {
-                Text("Carrito de \(user.username)!")
-            } else {
-                
-                NavigationLink(
-                    "Iniciar sesión", destination: UserView(authVM: authVM)
-                )
-                .padding()
-                .background(Color("PrimaryColor"))
-                .foregroundColor(.white)
-                .cornerRadius(10)
-            }
+            Text("Carrito de la compra.")
+                List(cartVM.products) { product in
+                    HStack {
+                        AsyncImage(url: URL(string: product.image)){
+                            image in image.resizable().scaledToFit()
+                        } placeholder: {
+                            ProgressView()
+                        }
+                            .scaledToFit()
+                            .frame(height: 150)
+                            .cornerRadius(10)
+                            .padding(.bottom, 8)
+                        VStack(alignment: .leading) {
+                            Text(product.title)
+                                .font(.headline)
+                                .foregroundStyle(Color("PrimaryColor"))
+                                .foregroundColor(.primary)
+                            Text(String(product.price))
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+                        
+                    }
+                }
         }
     }
     

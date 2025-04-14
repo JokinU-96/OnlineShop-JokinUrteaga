@@ -22,22 +22,23 @@ struct ContentView: View {
                 .cornerRadius(10)
             NavigationStack {
                 List(productVM.products) { product in
-                    NavigationLink(destination: ProductDetailView(product: product, authVM: authVM, productVM: productVM)) {
+                    NavigationLink(destination: ProductDetailView(product: product, authVM: authVM, cartVM: cartVM)) {
                         HStack {
-                            Image(systemName: "calendar")
-                                .resizable()
-                                .foregroundStyle(.red)
-                                .opacity(0.5)
+                            AsyncImage(url: URL(string: product.image)){
+                                image in image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
                                 .scaledToFit()
                                 .frame(height: 150)
                                 .cornerRadius(10)
                                 .padding(.bottom, 8)
                             VStack(alignment: .leading) {
-                                Text(product.product_title)
+                                Text(product.title)
                                     .font(.headline)
                                     .foregroundStyle(Color("PrimaryColor"))
                                     .foregroundColor(.primary)
-                                Text(product.product_description)
+                                Text(String(product.price))
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                             }
@@ -74,7 +75,7 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    NavigationLink(destination: CartView(cartVM: cartVM, authVM: authVM)){
+                    NavigationLink(destination: CartView(cartVM: cartVM)){
                         VStack{
                             Image(systemName:  "cart.fill")
                             Text("Carrito")

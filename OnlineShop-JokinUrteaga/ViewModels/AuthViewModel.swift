@@ -11,14 +11,14 @@ class AuthViewModel: ObservableObject {
     @Published var user: User? = nil
     @Published var token: String? = nil
     
-    func login(email: String, password: String) {
+    func login(username: String, password: String) {
         guard let url = URL(string: "\(API.baseURL)/auth/login") else {
             return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let loginData = LoginRequest(email: email, password: password)
+        let loginData = LoginRequest(username: username, password: password)
         
         request.httpBody = try? JSONEncoder().encode(loginData)
         

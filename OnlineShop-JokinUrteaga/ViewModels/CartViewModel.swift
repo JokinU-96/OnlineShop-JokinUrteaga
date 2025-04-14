@@ -8,4 +8,9 @@ import SwiftUI
 
 class CartViewModel: ObservableObject{
     
+    var products : [Product] = []
+    
+    func addProductToMyCart(product: Product){
+        products.append(product)
+    }
 }

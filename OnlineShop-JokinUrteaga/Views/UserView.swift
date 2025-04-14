@@ -9,7 +9,7 @@ import SwiftUI
 struct UserView: View {
     
     @ObservedObject var authVM: AuthViewModel
-    @State private var email: String = ""
+    @State private var username: String = ""
     @State private var password: String = ""
     
     var body: some View {
@@ -24,15 +24,15 @@ struct UserView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
             } else {
-                TextField("Email", text: $email)
+                TextField("johnd", text: $username)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .textCase(.lowercase)
                     .padding()
-                SecureField("Contraseña", text: $password)
+                SecureField("m38rmF$", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 Button("Iniciar sesión") {
-                    authVM.login(email: email, password: password)
+                    authVM.login(username: username, password: password)
                 }
                 .padding()
                 .background(Color("PrimaryColor"))
