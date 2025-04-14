@@ -14,7 +14,7 @@ struct CartView: View{
     var body: some View {
         VStack{
             Text("Carrito de la compra.")
-                List(cartVM.products) { product in
+                List(cartVM.products ?? []) { product in
                     HStack {
                         AsyncImage(url: URL(string: product.image)){
                             image in image.resizable().scaledToFit()
@@ -38,16 +38,30 @@ struct CartView: View{
                     }
                     
                 }
-            if cartVM.products.count > 0 {
-                Button("Comprar") {
-                    print("Acabas de comprar los productos del carrito")
+            HStack{
+                if let products = cartVM.products, products.count > 0 {
+                    Button("Comprar: \(cartVM.gastoTotal())") {
+                        print("Acabas de comprar los productos del carrito")
+                    }
+                    .padding()
+                    .background(Color("PrimaryColor"))
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    
+                    Button("Vaciar") {
+                        cartVM.limpiarCarrito()
+                        print("Acabas de vaciar los productos del carrito")
+                    }
+                    .padding()
+                    .background(Color(.red))
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
                 }
-                .padding()
-                .background(Color("PrimaryColor"))
-                .foregroundColor(.white)
-                .cornerRadius(10)
             }
         }
     }
     
+}
+#Preview {
+    CartView(cartVM: CartViewModel())
 }

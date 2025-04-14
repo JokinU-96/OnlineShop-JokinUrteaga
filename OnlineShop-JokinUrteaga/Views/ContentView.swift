@@ -75,10 +75,13 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    NavigationLink(destination: CartView(cartVM: cartVM)){
-                        VStack{
-                            Image(systemName:  "cart.fill")
-                            Text("Carrito")
+                    NavigationLink(destination: CartView(cartVM: cartVM)){                        
+                        TabView{
+                            Color.clear
+                                .tabItem{
+                                    Label("Carrito", systemImage: "cart.fill")
+                                }
+                                .badge("\(cartVM.products?.count ?? 0)")
                         }
                     }
                     .padding()
