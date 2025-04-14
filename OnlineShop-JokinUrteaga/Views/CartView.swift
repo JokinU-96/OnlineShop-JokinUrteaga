@@ -36,7 +36,17 @@ struct CartView: View{
                         }
                         
                     }
+                    
                 }
+            if cartVM.products.count > 0 {
+                Button("Comprar") {
+                    print("Acabas de comprar los productos del carrito")
+                }
+                .padding()
+                .background(Color("PrimaryColor"))
+                .foregroundColor(.white)
+                .cornerRadius(10)
+            }
         }
     }
     
